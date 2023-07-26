@@ -5,4 +5,4 @@ services:
     image: ${DOCKER_REGISTRY-}employeeapiwithcfa
     build:
       context: .
-      dockerfile: EmployeeAPIWithCFA\Dockerfile
+      dockerfile: EmployeeAPIWithCFA/Dockerfile
