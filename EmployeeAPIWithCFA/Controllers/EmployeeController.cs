@@ -27,11 +27,12 @@ namespace EmployeeAPIWithCFA.Controllers
             return "Employee Details Added Successfully";
         }
         [HttpGet]
+        [Route("Get")]
         public IEnumerable<Employee> Get()
         {
             return _IEmployeeRepositary.GetAllEmployees();
         }
-
+        [HttpGet]
         [Route("GetEmployees")]
         public List<Employee> GetEmployees() 
         {   
