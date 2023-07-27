@@ -1,4 +1,5 @@
 ﻿using EmployeeAPIWithCFA.Models;
+using EmployeeAPIWithCFA.Repositary;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,11 +9,13 @@ namespace EmployeeAPIWithCFA.Controllers
     [ApiController]
     public class EmployeeController : ControllerBase
     {
+        private readonly IEmployeeRepositary _IEmployeeRepositary;
         private readonly EmployeeDbContext EmployeeContext;
 
         public EmployeeController(EmployeeDbContext EmployeeContext)
         {
             this.EmployeeContext = EmployeeContext;
+            _IEmployeeRepositary = new IEmployeeRepositary();
         }
         [HttpPost]
         [Route("AddEmployee")]
@@ -24,6 +27,11 @@ namespace EmployeeAPIWithCFA.Controllers
             return "Employee Details Added Successfully";
         }
         [HttpGet]
+        public IEnumerable<Employee> Get()
+        {
+            return _IEmployeeRepositary.GetAllEmployees();
+        }
+
         [Route("GetEmployees")]
         public List<Employee> GetEmployees() 
         {   
