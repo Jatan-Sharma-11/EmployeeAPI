@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EmployeeAPIWithCFA.Migrations
 {
     [DbContext(typeof(EmployeeDbContext))]
-    [Migration("20230727090759_Test")]
-    partial class Test
+    [Migration("20230727114520_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -35,7 +35,6 @@ namespace EmployeeAPIWithCFA.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
