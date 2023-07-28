@@ -26,27 +26,26 @@ namespace EmployeeAPIWithCFA.Controllers
             EmployeeContext.SaveChanges();
             return "Employee Details Added Successfully";
         }
+
         [HttpGet]
-        [Route("Get")]
-        [HttpGet]
-        public IActionResult Get()
+        [Route("GetAllEmployees")]
+        public IActionResult GetAllEmployees()
         {
             var items = _IEmployeeRepositary.GetAllEmployees();
             return Ok(items);
-        }
-        [HttpGet]
-        [Route("GetEmployees")]
-        public List<Employee> GetEmployees()
-        {
-            return EmployeeContext.Employees.ToList();
         }
 
         [HttpGet]
         [Route("GetEmployee")]
 
-        public Employee GetEmployee(int id)
+        public IActionResult GetEmployee(int id)
         {
-            return EmployeeContext.Employees.Where(x => x.Id == id).FirstOrDefault();
+            var item = _IEmployeeRepositary.GetById(id);
+            if (item == null)
+            {
+                return NotFound();
+            }
+            return Ok(item);
         }
 
         [HttpPut]
