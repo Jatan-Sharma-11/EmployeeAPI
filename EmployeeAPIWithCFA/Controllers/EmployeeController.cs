@@ -26,12 +26,12 @@ namespace EmployeeAPIWithCFA.Controllers
             EmployeeContext.SaveChanges(); 
             return "Employee Details Added Successfully";
         }
-        [HttpGet]
-        [Route("Get")]
-        public IEnumerable<Employee> Get()
-        {
-            return _IEmployeeRepositary.GetAllEmployees();
-        }
+        //[HttpGet]
+        //[Route("Get")]
+        //public IEnumerable<Employee> Get()
+        //{
+        //    return _IEmployeeRepositary.GetAllEmployees();
+        //}
         [HttpGet]
         [Route("GetEmployees")]
         public List<Employee> GetEmployees() 
@@ -44,7 +44,7 @@ namespace EmployeeAPIWithCFA.Controllers
 
         public Employee GetEmployee(int id)
         {
-            return EmployeeContext.Employees.Where(x=>x.Id == id).FirstOrDefault();
+            return EmployeeContext.Employees.Where(x => x.Id == id).FirstOrDefault();
         }
 
         [HttpPut]

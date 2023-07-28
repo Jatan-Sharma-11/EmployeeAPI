@@ -1,4 +1,5 @@
 using EmployeeAPIWithCFA.Models;
+using EmployeeAPIWithCFA.Repositary;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
