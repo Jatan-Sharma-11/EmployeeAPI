@@ -4,9 +4,9 @@ namespace EmployeeAPIWithCFA.Repositary
 {
     public interface IEmployee
     {
-        List<Employee> GetAllEmployees();
+        IEnumerable<Employee> GetAllEmployees();
 
-        Employee GetById(int id);
+      //  Employee GetById(int id);
           
     }
 }

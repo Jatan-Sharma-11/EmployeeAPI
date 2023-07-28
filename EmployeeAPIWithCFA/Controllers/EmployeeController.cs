@@ -9,33 +9,35 @@ namespace EmployeeAPIWithCFA.Controllers
     [ApiController]
     public class EmployeeController : ControllerBase
     {
-        private readonly IEmployeeRepositary _IEmployeeRepositary;
+        private readonly IEmployee _IEmployeeRepositary;
         private readonly EmployeeDbContext EmployeeContext;
 
-        public EmployeeController(EmployeeDbContext EmployeeContext)
+        public EmployeeController(EmployeeDbContext EmployeeContext, IEmployee EmployeeRepositary)
         {
             this.EmployeeContext = EmployeeContext;
-            _IEmployeeRepositary = new IEmployeeRepositary();
+            _IEmployeeRepositary = EmployeeRepositary;
         }
         [HttpPost]
         [Route("AddEmployee")]
-        public string AddEmployee(Employee Emp) 
+        public string AddEmployee(Employee Emp)
         {
             string response = string.Empty;
             EmployeeContext.Employees.Add(Emp);
-            EmployeeContext.SaveChanges(); 
+            EmployeeContext.SaveChanges();
             return "Employee Details Added Successfully";
         }
-        //[HttpGet]
-        //[Route("Get")]
-        //public IEnumerable<Employee> Get()
-        //{
-        //    return _IEmployeeRepositary.GetAllEmployees();
-        //}
+        [HttpGet]
+        [Route("Get")]
+        [HttpGet]
+        public IActionResult Get()
+        {
+            var items = _IEmployeeRepositary.GetAllEmployees();
+            return Ok(items);
+        }
         [HttpGet]
         [Route("GetEmployees")]
-        public List<Employee> GetEmployees() 
-        {   
+        public List<Employee> GetEmployees()
+        {
             return EmployeeContext.Employees.ToList();
         }
 
@@ -60,9 +62,9 @@ namespace EmployeeAPIWithCFA.Controllers
         [HttpDelete]
         [Route("DeleteEmployee")]
 
-        public string DeleteEmployee(int id) 
+        public string DeleteEmployee(int id)
         {
-            Employee Emp = EmployeeContext.Employees.Where(x=>x.Id == id).FirstOrDefault();
+            Employee Emp = EmployeeContext.Employees.Where(x => x.Id == id).FirstOrDefault();
             if (Emp != null)
             {
                 EmployeeContext.Employees.Remove(Emp);
@@ -73,7 +75,7 @@ namespace EmployeeAPIWithCFA.Controllers
             {
                 return "Employee Data Not Found";
             }
-            
+
         }
     }
 }
