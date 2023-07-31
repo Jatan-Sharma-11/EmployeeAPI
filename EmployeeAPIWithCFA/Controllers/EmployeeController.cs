@@ -11,16 +11,15 @@ namespace EmployeeAPIWithCFA.Controllers
     public class EmployeeController : ControllerBase
     {
         private readonly IEmployee _IEmployeeRepositary;
-        private readonly EmployeeDbContext EmployeeContext;
 
-        public EmployeeController(EmployeeDbContext EmployeeContext, IEmployee EmployeeRepositary)
+        public EmployeeController(IEmployee EmployeeRepositary)
         {
-            this.EmployeeContext = EmployeeContext;
             _IEmployeeRepositary = EmployeeRepositary;
         }
+
         [HttpPost]
-        [Route("AddEmployee")]
-        public IActionResult PostEmployee(Employee employee)
+        [Route("AddNewEmployee")]
+        public IActionResult AddNewEmployee(Employee employee)
         {
             if (ModelState.IsValid)
             {
@@ -53,31 +52,37 @@ namespace EmployeeAPIWithCFA.Controllers
 
         [HttpPut]
         [Route("UpdateEmployee")]
-
-        public string UpdateEmployee(Employee emp)
+        public IActionResult UpdateEmployee(int id, [FromBody] Employee employee)
         {
-            EmployeeContext.Entry(emp).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
-            EmployeeContext.SaveChanges();
-            return "Employee Record Updated Successfully";
+            if (employee == null || id != employee.Id)
+            {
+                return BadRequest();
+            }
+            var existingEmployee = _IEmployeeRepositary.GetById(id);
+            if (existingEmployee == null)
+            {
+                return NotFound("Wrong Id input");
+            }
+            else
+            {
+                _IEmployeeRepositary.UpdateEmployee(employee);
+                return Ok("Employee Details Updated Successfully");
+            }
         }
 
         [HttpDelete]
         [Route("DeleteEmployee")]
-
-        public string DeleteEmployee(int id)
+        public IActionResult DeleteEmployee(int id)
         {
-            Employee Emp = EmployeeContext.Employees.Where(x => x.Id == id).FirstOrDefault();
-            if (Emp != null)
+            bool deleted = _IEmployeeRepositary.DeleteEmployee(id);
+            if (deleted)
             {
-                EmployeeContext.Employees.Remove(Emp);
-                EmployeeContext.SaveChanges();
-                return "Employee Details Deleted Successfully";
+                return Ok("Employee Details Deleted Successfully");
             }
             else
             {
-                return "Employee Data Not Found";
+                return NotFound("Employee Data Not Found");
             }
-
         }
     }
 }
