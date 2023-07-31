@@ -10,9 +10,5 @@ namespace EmployeeAPIWithCFA.Models
         }
         public DbSet<Employee> Employees { get; set; }
 
-        //protected override void OnModelCreating(DbModelbuilder modelBuilder)
-        //{
-        //    modelBuilder.Entity<yourEntity>().MapToStoredProcedures();
-        //}
     }
 }

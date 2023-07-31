@@ -2,6 +2,7 @@
 using EmployeeAPIWithCFA.Repositary;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace EmployeeAPIWithCFA.Controllers
 {
@@ -19,12 +20,14 @@ namespace EmployeeAPIWithCFA.Controllers
         }
         [HttpPost]
         [Route("AddEmployee")]
-        public string AddEmployee(Employee Emp)
+        public IActionResult PostEmployee(Employee employee)
         {
-            string response = string.Empty;
-            EmployeeContext.Employees.Add(Emp);
-            EmployeeContext.SaveChanges();
-            return "Employee Details Added Successfully";
+            if (ModelState.IsValid)
+            {
+                _IEmployeeRepositary.AddEmployee(employee);
+                return Ok(employee);
+            }
+            return BadRequest(ModelState);
         }
 
         [HttpGet]

@@ -1,4 +1,5 @@
 ﻿using EmployeeAPIWithCFA.Models;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
@@ -15,24 +16,20 @@ namespace EmployeeAPIWithCFA.Repositary
         }
         public IEnumerable<Employee> GetAllEmployees()
         {
-            return _EmployeeContext.Employees.ToList();
+            return _EmployeeContext.Employees.FromSqlRaw("EXEC GetAllEmployee");
         }
-        Employee IEmployee.GetById(int id)
+        List<Employee> IEmployee.GetById(int id)
         {
-            return _EmployeeContext.Employees.Where(p => p.Id == id).FirstOrDefault();
+            //   return _EmployeeContext.Employees.Where(p => p.Id == id).FirstOrDefault();
+            var EmployeeId = new SqlParameter("@EmployeeID", id);
+            return _EmployeeContext.Employees.FromSqlRaw("EXEC GetEmployeeByID @EmployeeID", EmployeeId).ToList();
         }
 
-        //public void AddEmployee(Employee employee)
-        //{
-        //    _EmployeeContext.Add(employee);
-        //}
-        //   void UpdateEmployee(Employee employee);
-        //  void DeleteEmployee(int id);
-
-        //public Employee GetById(int id)
-        //{
-        //    return EmployeeContext.Employees.Where(x => x.Id == id).FirstOrDefault();
-        //}
-
+        public Employee AddEmployee(Employee employee)
+        {
+            _EmployeeContext.Employees.Add(employee);
+            _EmployeeContext.SaveChanges();
+            return employee;
+        }
     }
 }

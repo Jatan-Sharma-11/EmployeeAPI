@@ -4,12 +4,11 @@ namespace EmployeeAPIWithCFA.Repositary
 {
     public interface IEmployee
     {
+
         IEnumerable<Employee> GetAllEmployees();
 
-        Employee GetById(int id);
-          
-       // void AddEmployee(Employee employee);
-     //   void UpdateEmployee(Employee employee);
-      //  void DeleteEmployee(int id);
+        List<Employee> GetById(int id);
+        Employee AddEmployee(Employee employee);
+
     }
 }
