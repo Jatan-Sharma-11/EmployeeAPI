@@ -5,7 +5,7 @@ namespace EmployeeAPIWithCFA.Repositary
     public interface IEmployee
     {
         Employee AddEmployee(Employee employee);
-        IEnumerable<Employee> GetAllEmployees();
+        Task<IEnumerable<Employee>> GetAllEmployeesAsync();
 
         List<Employee> GetById(int id);
         Employee UpdateEmployee(Employee employee);

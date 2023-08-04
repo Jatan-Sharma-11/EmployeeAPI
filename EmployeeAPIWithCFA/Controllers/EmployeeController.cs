@@ -31,9 +31,9 @@ namespace EmployeeAPIWithCFA.Controllers
 
         [HttpGet]
         [Route("GetAllEmployees")]
-        public IActionResult GetAllEmployees()
+        public async Task<IActionResult> GetAllEmployees()
         {
-            var items = _IEmployeeRepositary.GetAllEmployees();
+            var items = await _IEmployeeRepositary.GetAllEmployeesAsync();
             return Ok(items);
         }
 

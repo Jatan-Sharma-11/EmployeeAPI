@@ -20,8 +20,10 @@ namespace EmployeeAPIWithCFA.Repositary
         {
             var Name = new SqlParameter("@Name", employee.Name);
             var Designation = new SqlParameter("@Designation", employee.Designation);
-            _EmployeeContext.Database.ExecuteSqlRaw("Exec InsertEmployee @Name, @Designation",Name,Designation);
-            var insertedEmployee = _EmployeeContext.Employees.FromSqlRaw("SELECT * FROM Employees WHERE Name = @Name AND Designation = @Designation", Name, Designation).FirstOrDefault();
+            var salary = new SqlParameter("salary", employee.salary);
+            var emailid = new SqlParameter("emailid",employee.emailid);
+            _EmployeeContext.Database.ExecuteSqlRaw("Exec InsertEmployee @Name, @Designation, @salary, @emailid",Name,Designation,salary,emailid);
+            var insertedEmployee = _EmployeeContext.Employees.FromSqlRaw("SELECT * FROM Employees WHERE Name = @Name AND Designation = @Designation AND salary = @salary AND emailid = @emailid", Name, Designation,salary,emailid).FirstOrDefault();
 
             if (insertedEmployee != null)
             {
@@ -29,9 +31,9 @@ namespace EmployeeAPIWithCFA.Repositary
             }
             return employee;
         }
-        public IEnumerable<Employee> GetAllEmployees()
+        public async Task<IEnumerable<Employee>> GetAllEmployeesAsync()
         {
-            return _EmployeeContext.Employees.FromSqlRaw("EXEC GetAllEmployee");
+            return await _EmployeeContext.Employees.FromSqlRaw("EXEC GetAllEmployee").ToListAsync();
         }
         List<Employee> IEmployee.GetById(int id)
         {
@@ -44,7 +46,9 @@ namespace EmployeeAPIWithCFA.Repositary
             var Id = new SqlParameter("@Id", employee.Id);
             var Name = new SqlParameter("@Name", employee.Name);
             var Designation = new SqlParameter("@Designation", employee.Designation);
-            _EmployeeContext.Database.ExecuteSqlRaw("Exec UpdateEmployee @Id, @Name, @Designation", Id, Name, Designation);
+            var salary = new SqlParameter("salary", employee.salary);
+            var emailid = new SqlParameter("emailid", employee.emailid);
+            _EmployeeContext.Database.ExecuteSqlRaw("Exec UpdateEmployee @Id, @Name, @Designation,  @salary, @emailid", Id, Name, Designation, salary, emailid);
             return employee;
         }
 

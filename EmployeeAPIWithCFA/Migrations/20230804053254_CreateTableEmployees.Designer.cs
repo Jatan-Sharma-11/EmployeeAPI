@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EmployeeAPIWithCFA.Migrations
 {
     [DbContext(typeof(EmployeeDbContext))]
-    [Migration("20230727114520_Initial")]
-    partial class Initial
+    [Migration("20230804053254_CreateTableEmployees")]
+    partial class CreateTableEmployees
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -32,10 +32,21 @@ namespace EmployeeAPIWithCFA.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Designation")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("emailid")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<int>("salary")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
