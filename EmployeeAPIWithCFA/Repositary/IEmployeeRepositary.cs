@@ -23,7 +23,7 @@ namespace EmployeeAPIWithCFA.Repositary
             var salary = new SqlParameter("salary", employee.salary);
             var emailid = new SqlParameter("emailid",employee.emailid);
             _EmployeeContext.Database.ExecuteSqlRaw("Exec InsertEmployee @Name, @Designation, @salary, @emailid",Name,Designation,salary,emailid);
-            var insertedEmployee = _EmployeeContext.Employees.FromSqlRaw("SELECT * FROM Employees WHERE Name = @Name AND Designation = @Designation AND salary = @salary AND emailid = @emailid", Name, Designation,salary,emailid).FirstOrDefault();
+            var insertedEmployee = _EmployeeContext.Employees.FromSqlRaw("SELECT * FROM Employees WHERE Name = @Name AND Designation = @Designation", Name, Designation).FirstOrDefault();
 
             if (insertedEmployee != null)
             {
