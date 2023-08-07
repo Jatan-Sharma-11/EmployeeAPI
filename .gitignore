@@ -361,3 +361,16 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/.dockerignore
+/docker-compose.dcproj
+/docker-compose.override.yml
+/docker-compose.yml
+/EmployeeAPIWithCFA (2).zip
+/EmployeeAPIWithCFA.zip
+/.dockerignore
+/.dockerignore
+/docker-compose.dcproj
+/docker-compose.override.yml
+/docker-compose.yml
+/EmployeeAPIWithCFA (2).zip
+/EmployeeAPIWithCFA.zip

@@ -18,8 +18,8 @@ namespace EmployeeAPIWithCFA.Controllers
         }
 
         [HttpPost]
-        [Route("AddNewEmployee")]
-        public IActionResult AddNewEmployee(Employee employee)
+        [Route("CreateEmployee")]
+        public IActionResult CreateEmployee(Employee employee)
         {
             if (ModelState.IsValid)
             {
@@ -30,17 +30,17 @@ namespace EmployeeAPIWithCFA.Controllers
         }
 
         [HttpGet]
-        [Route("GetAllEmployees")]
-        public async Task<IActionResult> GetAllEmployees()
+        [Route("GetEmployees")]
+        public async Task<IActionResult> GetEmployees()
         {
             var items = await _IEmployeeRepositary.GetAllEmployeesAsync();
             return Ok(items);
         }
 
         [HttpGet]
-        [Route("GetEmployee")]
+        [Route("GetEmployeeById")]
 
-        public IActionResult GetEmployee(int id)
+        public IActionResult GetEmployeeById(int id)
         {
             var item = _IEmployeeRepositary.GetById(id);
             if (item == null)

@@ -1,8 +1,0 @@
-version: '3.4'
-
-services:
-  employeeapiwithcfa:
-    image: ${DOCKER_REGISTRY-}employeeapiwithcfa
-    build:
-      context: .
-      dockerfile: EmployeeAPIWithCFA/Dockerfile
